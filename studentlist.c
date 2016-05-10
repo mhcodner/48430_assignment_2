@@ -58,7 +58,6 @@ may define your own functions if required.
 void printmenu(void);
 
 void addStudent(student_t[], int*);
-void deleteLastStudent(student_t[], int*);
 void displayList(student_t[], int*);
 void save(student_t[], int*);
 void read(student_t[], int*);
@@ -80,7 +79,8 @@ int main(void) {
                 addStudent(studentlist, &listSize);
                 break;
             case '2':
-                deleteLastStudent(studentlist, &listSize);
+                if (listSize > 0)
+                    listSize--;
                 break;
             case '3':
                 displayList(studentlist, &listSize);
@@ -168,10 +168,6 @@ void addStudent(student_t list[], int* listSize) {
 
     list[*listSize] = newStudent;
     *listSize += 1;
-}
-
-void deleteLastStudent(student_t list[], int* listSize) {
-
 }
 
 void displayList(student_t list[], int* listSize) {
