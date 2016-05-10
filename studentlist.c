@@ -38,8 +38,18 @@ Note: do not worry about some months not having dates 29-31. That means
 day30.
 */
 struct date {
-    /* TODO */
+    int day;
+    int month;
+    int year;
 };
+
+struct student {
+    char name[MAX_NAME_SIZE];
+    float gpa;
+    struct date birthday;
+};
+
+typedef struct student student_t;
 
 /**********************************************************************
 Function prototypes - do NOT change the given prototypes. However you
@@ -47,11 +57,46 @@ may define your own functions if required.
 **********************************************************************/
 void printmenu(void);
 
+void addStudent(student_t[], int*);
+void deleteLastStudent(student_t[], int*);
+void displayList(student_t[], int*);
+void save(student_t[], int*);
+void read(student_t[], int*);
+
 /**********************************************************************
 Main
 **********************************************************************/
 int main(void) {
-    printmenu();
+    student_t studentlist[MAX_CLASS_SIZE];
+    int listSize = 0;
+    char choice;
+    do {
+        printmenu();
+        scanf(" %c", &choice);
+        switch (choice){
+            case '1':
+                addStudent(studentlist, &listSize);
+                break;
+            case '2':
+                deleteLastStudent(studentlist, &listSize);
+                break;
+            case '3':
+                displayList(studentlist, &listSize);
+                break;
+            case '4':
+                save(studentlist, &listSize);
+                break;
+            case '5':
+                read(studentlist, &listSize);
+                break;
+            case '6':
+                exit(0);
+            default:
+                printf("Invalid choice.");
+                break;
+        }
+    }
+    while (choice != '6');
     return 1;
 }
 
@@ -66,4 +111,23 @@ void printmenu(void) {
                    "4. save the student list to the database\n"
                    "5. read the student list from the database\n"
                    "6. exit the program\n");
+}
+
+void addStudent(student_t list[], int* listSize) {
+
+}
+
+void deleteLastStudent(student_t list[], int* listSize) {
+
+}
+
+void displayList(student_t list[], int* listSize) {
+
+}
+void save(student_t list[], int* listSize) {
+
+}
+
+void read(student_t list[], int* listSize) {
+
 }
