@@ -122,7 +122,7 @@ void addStudent(student_t list[], int* listSize) {
 
     do {
         printf("Enter name>");
-        scanReturn = scanf(" %s", newStudent.name);
+        scanReturn = scanf(" %10[^\n]", newStudent.name);
         clean_stdin();
     } while (scanReturn != 1);
 
