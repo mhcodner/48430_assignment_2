@@ -72,6 +72,7 @@ int main(void) {
     char choice;
     do {
         printmenu();
+        printf("Enter your choice>");
         scanf(" %c", &choice);
         switch (choice){
             case '1':
@@ -114,7 +115,19 @@ void printmenu(void) {
 }
 
 void addStudent(student_t list[], int* listSize) {
-
+    student_t newStudent;
+    printf("Enter name>");
+    scanf(" %s", newStudent.name);
+    printf("Enter birthday: Day>");
+    scanf(" %d", &newStudent.birthday.day);
+    printf("Enter birthday: Month>");
+    scanf(" %d", &newStudent.birthday.month);
+    printf("Enter birthday: Year>");
+    scanf(" %d", &newStudent.birthday.year);
+    printf("Enter GPA>");
+    scanf(" %f", &newStudent.gpa);
+    list[*listSize] = newStudent;
+    *listSize += 1;
 }
 
 void deleteLastStudent(student_t list[], int* listSize) {
@@ -122,8 +135,14 @@ void deleteLastStudent(student_t list[], int* listSize) {
 }
 
 void displayList(student_t list[], int* listSize) {
-
+    printf("Name       Birthday   GPA   \n");
+    printf("---------- ---------- ------\n");
+    int i;
+    for (i = 0; i < *listSize; i++) {
+        printf("%-10.10s %02d-%02d-%d %.4f\n", list[i].name, list[i].birthday.day, list[i].birthday.month, list[i].birthday.year, list[i].gpa);
+    }
 }
+
 void save(student_t list[], int* listSize) {
 
 }
