@@ -62,6 +62,7 @@ void deleteLastStudent(student_t[], int*);
 void displayList(student_t[], int*);
 void save(student_t[], int*);
 void read(student_t[], int*);
+void clean_stdin();
 
 /**********************************************************************
 Main
@@ -115,17 +116,56 @@ void printmenu(void) {
 }
 
 void addStudent(student_t list[], int* listSize) {
+
     student_t newStudent;
-    printf("Enter name>");
-    scanf(" %s", newStudent.name);
-    printf("Enter birthday: Day>");
-    scanf(" %d", &newStudent.birthday.day);
-    printf("Enter birthday: Month>");
-    scanf(" %d", &newStudent.birthday.month);
-    printf("Enter birthday: Year>");
-    scanf(" %d", &newStudent.birthday.year);
-    printf("Enter GPA>");
-    scanf(" %f", &newStudent.gpa);
+    int scanReturn;
+
+    do {
+        printf("Enter name>");
+        scanReturn = scanf(" %s", newStudent.name);
+        clean_stdin();
+    } while (scanReturn != 1);
+
+    do {
+        if (scanReturn == 0)
+            printf("Invalid day. ");
+        printf("Enter birthday: Day>");
+        scanReturn = scanf(" %d", &newStudent.birthday.day);
+        if (newStudent.birthday.day < 1 || newStudent.birthday.day > 31)
+            scanReturn = 0;
+        clean_stdin();
+    } while (scanReturn != 1);
+
+    do {
+        if (scanReturn == 0)
+            printf("Invalid month. ");
+        printf("Enter birthday: Month>");
+        scanReturn = scanf(" %d", &newStudent.birthday.month);
+        if (newStudent.birthday.month < 1 || newStudent.birthday.month > 12)
+            scanReturn = 0;
+        clean_stdin();
+    } while (scanReturn != 1);
+
+    do {
+        if (scanReturn == 0)
+            printf("Invalid year. ");
+        printf("Enter birthday: Year>");
+        scanReturn = scanf(" %d", &newStudent.birthday.year);
+        if (newStudent.birthday.year < 1800 || newStudent.birthday.year > 2016)
+            scanReturn = 0;
+        clean_stdin();
+    } while (scanReturn != 1);
+
+    do {
+        if (scanReturn == 0)
+            printf("Invalid GPA. ");
+        printf("Enter GPA>");
+        scanReturn = scanf(" %f", &newStudent.gpa);
+        if (newStudent.gpa < 0 || newStudent.gpa > 4.0)
+            scanReturn = 0;
+        clean_stdin();
+    } while (scanReturn != 1);
+
     list[*listSize] = newStudent;
     *listSize += 1;
 }
@@ -149,4 +189,9 @@ void save(student_t list[], int* listSize) {
 
 void read(student_t list[], int* listSize) {
 
+}
+
+void clean_stdin(void) {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
 }
