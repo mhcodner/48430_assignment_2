@@ -180,11 +180,28 @@ void displayList(student_t list[], int* listSize) {
 }
 
 void save(student_t list[], int* listSize) {
-
+    FILE* db = fopen(DB_FILE_NAME, "w");
+    int i;
+    for (i = 0; i < *listSize; i++) {
+        fprintf(db, "%11s %02d-%02d-%d %.4f\n", list[i].name, list[i].birthday.day, list[i].birthday.month, list[i].birthday.year, list[i].gpa);
+    }
+    fclose(db);
 }
 
 void read(student_t list[], int* listSize) {
+    FILE* db = fopen(DB_FILE_NAME, "r");
+    if (NULL == db)
+    {
+        perror("opening database");
+    }
 
+    int i = 0;
+    while (EOF != fscanf(db, "%11s %02d-%02d-%d %f\n", list[i].name, &list[i].birthday.day, &list[i].birthday.month, &list[i].birthday.year, &list[i].gpa)) {
+        i++;
+    }
+
+    *listSize = i;
+    fclose(db);
 }
 
 void clean_stdin(void) {
