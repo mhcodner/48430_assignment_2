@@ -61,7 +61,7 @@ void addStudent(student_t[], int*);
 void displayList(student_t[], int*);
 void save(student_t[], int*);
 void read(student_t[], int*);
-void clean_stdin();
+int clean_stdin();
 
 /**********************************************************************
 Main
@@ -73,7 +73,7 @@ int main(void) {
     do {
         printmenu();
         printf("Enter your choice>");
-        scanf(" %c", &choice);
+        scanf("%c", &choice);
         switch (choice){
             case '1':
                 addStudent(studentlist, &listSize);
@@ -94,11 +94,11 @@ int main(void) {
             case '6':
                 exit(0);
             default:
-                printf("Invalid choice.");
+                printf("Invalid choice.\n");
                 break;
         }
     }
-    while (choice != '6');
+    while (choice != '6' && clean_stdin());
     return 1;
 }
 
@@ -171,11 +171,16 @@ void addStudent(student_t list[], int* listSize) {
 }
 
 void displayList(student_t list[], int* listSize) {
-    printf("Name       Birthday   GPA   \n");
-    printf("---------- ---------- ------\n");
-    int i;
-    for (i = 0; i < *listSize; i++) {
-        printf("%-10.10s %02d-%02d-%d %.4f\n", list[i].name, list[i].birthday.day, list[i].birthday.month, list[i].birthday.year, list[i].gpa);
+    if (*listSize == 0) {
+        printf("Class is empty\n");
+    }
+    else {
+        printf("Name       Birthday   GPA   \n");
+        printf("---------- ---------- ------\n");
+        int i;
+        for (i = 0; i < *listSize; i++) {
+            printf("%-10.10s %02d-%02d-%d %.4f\n", list[i].name, list[i].birthday.day, list[i].birthday.month, list[i].birthday.year, list[i].gpa);
+        }
     }
 }
 
@@ -204,7 +209,7 @@ void read(student_t list[], int* listSize) {
     fclose(db);
 }
 
-void clean_stdin(void) {
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF);
+int clean_stdin() {
+    while (getchar()!='\n');
+    return 1;
 }
