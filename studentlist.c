@@ -61,7 +61,6 @@ void addStudent(student_t[], int*);
 void displayList(student_t[], int*);
 void save(student_t[], int*);
 void read(student_t[], int*);
-int clean_stdin();
 
 /**********************************************************************
 Main
@@ -74,6 +73,9 @@ int main(void) {
         printmenu();
         printf("Enter your choice>");
         scanf("%c", &choice);
+        while (getchar()!='\n') {
+            choice = '0';
+        }
         switch (choice){
             case '1':
                 addStudent(studentlist, &listSize);
@@ -98,7 +100,7 @@ int main(void) {
                 break;
         }
     }
-    while (choice != '6' && clean_stdin());
+    while (choice != '6');
     return 1;
 }
 
@@ -126,47 +128,55 @@ void addStudent(student_t list[], int* listSize) {
         do {
             printf("Enter name>");
             scanReturn = scanf(" %10[^\n]", newStudent.name);
-            clean_stdin();
+            while (getchar()!='\n');
         } while (scanReturn != 1);
 
         do {
             if (scanReturn == 0)
                 printf("Invalid day. ");
             printf("Enter birthday: Day>");
-            scanReturn = scanf(" %d", &newStudent.birthday.day);
+            scanReturn = scanf("%d", &newStudent.birthday.day);
             if (newStudent.birthday.day < 1 || newStudent.birthday.day > 31)
                 scanReturn = 0;
-            clean_stdin();
+            while (getchar()!='\n') {
+                scanReturn = 0;
+            }
         } while (scanReturn != 1);
 
         do {
             if (scanReturn == 0)
                 printf("Invalid month. ");
             printf("Enter birthday: Month>");
-            scanReturn = scanf(" %d", &newStudent.birthday.month);
+            scanReturn = scanf("%d", &newStudent.birthday.month);
             if (newStudent.birthday.month < 1 || newStudent.birthday.month > 12)
                 scanReturn = 0;
-            clean_stdin();
+            while (getchar()!='\n') {
+                scanReturn = 0;
+            }
         } while (scanReturn != 1);
 
         do {
             if (scanReturn == 0)
                 printf("Invalid year. ");
             printf("Enter birthday: Year>");
-            scanReturn = scanf(" %d", &newStudent.birthday.year);
+            scanReturn = scanf("%d", &newStudent.birthday.year);
             if (newStudent.birthday.year < 1800 || newStudent.birthday.year > 2016)
                 scanReturn = 0;
-            clean_stdin();
+            while (getchar()!='\n') {
+                scanReturn = 0;
+            }
         } while (scanReturn != 1);
 
         do {
             if (scanReturn == 0)
                 printf("Invalid GPA. ");
             printf("Enter GPA>");
-            scanReturn = scanf(" %f", &newStudent.gpa);
+            scanReturn = scanf("%f", &newStudent.gpa);
             if (newStudent.gpa < 0 || newStudent.gpa > 4.0)
                 scanReturn = 0;
-            clean_stdin();
+            while (getchar()!='\n') {
+                scanReturn = 0;
+            }
         } while (scanReturn != 1);
 
         list[*listSize] = newStudent;
@@ -213,9 +223,4 @@ void read(student_t list[], int* listSize) {
     }
 
     fclose(db);
-}
-
-int clean_stdin() {
-    while (getchar()!='\n');
-    return 1;
 }
