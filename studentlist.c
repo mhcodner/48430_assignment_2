@@ -116,58 +116,62 @@ void printmenu(void) {
 }
 
 void addStudent(student_t list[], int* listSize) {
+    if (*listSize >= MAX_CLASS_SIZE) {
+        printf("Class is full\n");
+    }
+    else {
+        student_t newStudent;
+        int scanReturn;
 
-    student_t newStudent;
-    int scanReturn;
+        do {
+            printf("Enter name>");
+            scanReturn = scanf(" %10[^\n]", newStudent.name);
+            clean_stdin();
+        } while (scanReturn != 1);
 
-    do {
-        printf("Enter name>");
-        scanReturn = scanf(" %10[^\n]", newStudent.name);
-        clean_stdin();
-    } while (scanReturn != 1);
+        do {
+            if (scanReturn == 0)
+                printf("Invalid day. ");
+            printf("Enter birthday: Day>");
+            scanReturn = scanf(" %d", &newStudent.birthday.day);
+            if (newStudent.birthday.day < 1 || newStudent.birthday.day > 31)
+                scanReturn = 0;
+            clean_stdin();
+        } while (scanReturn != 1);
 
-    do {
-        if (scanReturn == 0)
-            printf("Invalid day. ");
-        printf("Enter birthday: Day>");
-        scanReturn = scanf(" %d", &newStudent.birthday.day);
-        if (newStudent.birthday.day < 1 || newStudent.birthday.day > 31)
-            scanReturn = 0;
-        clean_stdin();
-    } while (scanReturn != 1);
+        do {
+            if (scanReturn == 0)
+                printf("Invalid month. ");
+            printf("Enter birthday: Month>");
+            scanReturn = scanf(" %d", &newStudent.birthday.month);
+            if (newStudent.birthday.month < 1 || newStudent.birthday.month > 12)
+                scanReturn = 0;
+            clean_stdin();
+        } while (scanReturn != 1);
 
-    do {
-        if (scanReturn == 0)
-            printf("Invalid month. ");
-        printf("Enter birthday: Month>");
-        scanReturn = scanf(" %d", &newStudent.birthday.month);
-        if (newStudent.birthday.month < 1 || newStudent.birthday.month > 12)
-            scanReturn = 0;
-        clean_stdin();
-    } while (scanReturn != 1);
+        do {
+            if (scanReturn == 0)
+                printf("Invalid year. ");
+            printf("Enter birthday: Year>");
+            scanReturn = scanf(" %d", &newStudent.birthday.year);
+            if (newStudent.birthday.year < 1800 || newStudent.birthday.year > 2016)
+                scanReturn = 0;
+            clean_stdin();
+        } while (scanReturn != 1);
 
-    do {
-        if (scanReturn == 0)
-            printf("Invalid year. ");
-        printf("Enter birthday: Year>");
-        scanReturn = scanf(" %d", &newStudent.birthday.year);
-        if (newStudent.birthday.year < 1800 || newStudent.birthday.year > 2016)
-            scanReturn = 0;
-        clean_stdin();
-    } while (scanReturn != 1);
+        do {
+            if (scanReturn == 0)
+                printf("Invalid GPA. ");
+            printf("Enter GPA>");
+            scanReturn = scanf(" %f", &newStudent.gpa);
+            if (newStudent.gpa < 0 || newStudent.gpa > 4.0)
+                scanReturn = 0;
+            clean_stdin();
+        } while (scanReturn != 1);
 
-    do {
-        if (scanReturn == 0)
-            printf("Invalid GPA. ");
-        printf("Enter GPA>");
-        scanReturn = scanf(" %f", &newStudent.gpa);
-        if (newStudent.gpa < 0 || newStudent.gpa > 4.0)
-            scanReturn = 0;
-        clean_stdin();
-    } while (scanReturn != 1);
-
-    list[*listSize] = newStudent;
-    *listSize += 1;
+        list[*listSize] = newStudent;
+        *listSize += 1;
+    }
 }
 
 void displayList(student_t list[], int* listSize) {
@@ -197,15 +201,17 @@ void read(student_t list[], int* listSize) {
     FILE* db = fopen(DB_FILE_NAME, "r");
     if (NULL == db)
     {
-        perror("opening database");
+        printf("Read error\n");
+    }
+    else {
+        int i = 0;
+        while (EOF != fscanf(db, "%11s %02d-%02d-%d %f\n", list[i].name, &list[i].birthday.day, &list[i].birthday.month, &list[i].birthday.year, &list[i].gpa)) {
+            i++;
+        }
+
+        *listSize = i;
     }
 
-    int i = 0;
-    while (EOF != fscanf(db, "%11s %02d-%02d-%d %f\n", list[i].name, &list[i].birthday.day, &list[i].birthday.month, &list[i].birthday.year, &list[i].gpa)) {
-        i++;
-    }
-
-    *listSize = i;
     fclose(db);
 }
 
