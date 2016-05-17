@@ -83,6 +83,8 @@ int main(void) {
             case '2':
                 if (listSize > 0)
                     listSize--;
+                else
+                    printf("Class is empty\n");
                 break;
             case '3':
                 displayList(studentlist, &listSize);
