@@ -137,48 +137,80 @@ void addStudent(student_t list[], int* listSize) {
             if (scanReturn == 0)
                 printf("Invalid day. ");
             printf("Enter birthday: Day>");
-            scanReturn = scanf("%d", &newStudent.birthday.day);
-            if (newStudent.birthday.day < 1 || newStudent.birthday.day > 31)
-                scanReturn = 0;
-            while (getchar()!='\n') {
-                scanReturn = 0;
+            char temp[100];
+            int i;
+            scanReturn = scanf("%100[^\n]", temp);
+            for (i = 0; temp[i] != '\0'; i++) {
+                if ((int)temp[i] < 48 || (int)temp[i] > 57) {
+                    scanReturn = 0;
+                    break;
+                }
             }
+            if (atoi(temp) < 1 || atoi(temp) > 31)
+                scanReturn = 0;
+            else
+                newStudent.birthday.day = atoi(temp);
+            while (getchar()!='\n');
         } while (scanReturn != 1);
 
         do {
             if (scanReturn == 0)
                 printf("Invalid month. ");
             printf("Enter birthday: Month>");
-            scanReturn = scanf("%d", &newStudent.birthday.month);
-            if (newStudent.birthday.month < 1 || newStudent.birthday.month > 12)
-                scanReturn = 0;
-            while (getchar()!='\n') {
-                scanReturn = 0;
+            char temp[100];
+            int i;
+            scanReturn = scanf("%100[^\n]", temp);
+            for (i = 0; temp[i] != '\0'; i++) {
+                if ((int)temp[i] < 48 || (int)temp[i] > 57) {
+                    scanReturn = 0;
+                    break;
+                }
             }
+            if (atoi(temp) < 1 || atoi(temp) > 12)
+                scanReturn = 0;
+            else
+                newStudent.birthday.month = atoi(temp);
+            while (getchar()!='\n');
         } while (scanReturn != 1);
 
         do {
             if (scanReturn == 0)
                 printf("Invalid year. ");
             printf("Enter birthday: Year>");
-            scanReturn = scanf("%d", &newStudent.birthday.year);
-            if (newStudent.birthday.year < 1800 || newStudent.birthday.year > 2016)
-                scanReturn = 0;
-            while (getchar()!='\n') {
-                scanReturn = 0;
+            char temp[100];
+            int i;
+            scanReturn = scanf("%100[^\n]", temp);
+            for (i = 0; temp[i] != '\0'; i++) {
+                if ((int)temp[i] < 48 || (int)temp[i] > 57) {
+                    scanReturn = 0;
+                    break;
+                }
             }
+            if (atoi(temp) < 1800 || atoi(temp) > 2016)
+                scanReturn = 0;
+            else
+                newStudent.birthday.year = atoi(temp);
+            while (getchar()!='\n');
         } while (scanReturn != 1);
 
         do {
             if (scanReturn == 0)
                 printf("Invalid GPA. ");
             printf("Enter GPA>");
-            scanReturn = scanf("%f", &newStudent.gpa);
-            if (newStudent.gpa < 0 || newStudent.gpa > 4.0)
-                scanReturn = 0;
-            while (getchar()!='\n') {
-                scanReturn = 0;
+            char temp[100];
+            int i;
+            scanReturn = scanf("%100[^\n]", temp);
+            for (i = 0; temp[i] != '\0'; i++) {
+                if (((int)temp[i] < 48 || (int)temp[i] > 57) && (int)temp[i] != 46) {
+                    scanReturn = 0;
+                    break;
+                }
             }
+            if (atof(temp) < 0 || atof(temp) > 4.0)
+                scanReturn = 0;
+            else
+                newStudent.gpa = atof(temp);
+            while (getchar()!='\n');
         } while (scanReturn != 1);
 
         list[*listSize] = newStudent;
