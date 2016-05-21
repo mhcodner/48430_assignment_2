@@ -74,7 +74,9 @@ int main(void) {
     do {
         printmenu();
         printf("Enter your choice>");
-        scanf("%c", &choice);
+        char temp[10];
+        scanf("%1[^\n]", temp);
+        choice = temp[0];
         while (getchar() != '\n') {
             choice = '0';
         }
