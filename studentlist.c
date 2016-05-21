@@ -69,16 +69,16 @@ Main
 **********************************************************************/
 int main(void) {
     student_t studentlist[MAX_CLASS_SIZE];
-    int listSize = 0;
-    char choice;
+    int listSize = 0; /* This is used to keep track of how many students are in the list*/
+    char choice; /* This is used to store the menu choice */
     do {
         printmenu();
         printf("Enter your choice>");
-        char temp[10];
-        scanf("%1[^\n]", temp);
-        choice = temp[0];
-        while (getchar() != '\n') {
-            choice = '0';
+        char temp[10]; /* Used as a temporary return for the scanf */
+        scanf("%1[^\n]", temp); /* This accepts at most 1 character until it sees a new line */
+        choice = temp[0]; /* Choice is set to the first character of the temp string */
+        while (getchar() != '\n') { /* This gets rid of any extra characters after the scanf because they are still in the input stream */
+            choice = '0'; /* If there are any characters after the first one, then choice is set to an invalid value */
         }
         switch (choice){
             case '1':
@@ -86,9 +86,9 @@ int main(void) {
                 break;
             case '2':
                 if (listSize > 0)
-                    listSize--;
+                    listSize--; /* Can't remove an element from the array but can decrement the counter */
                 else
-                    printf("Class is empty\n");
+                    printf("Class is empty\n"); /* Can't delete from an empty list */
                 break;
             case '3':
                 displayList(studentlist, &listSize);
@@ -123,81 +123,90 @@ void printmenu(void) {
                    "6. exit the program\n");
 }
 
+
+/*
+ *  This function accepts the list of students and a pointer to the list size.
+ *  It will add a new student to the list while not accepting invalid inputs
+ * */
 void addStudent(student_t list[], int* listSize) {
     if (*listSize >= MAX_CLASS_SIZE) {
-        printf("Class is full\n");
+        printf("Class is full\n"); /* Can't add more than 5 people to the class */
     }
     else {
-        student_t newStudent;
-        int scanReturn;
+        student_t newStudent; /* Used to store the new student until it is added to the list */
+        int scanReturn; /* Used to check the number of valid values returned from scanf */
 
         do {
             printf("Enter name>");
-            scanReturn = scanf(" %10[^\n]", newStudent.name);
-            while (getchar()!='\n');
-        } while (scanReturn != 1);
+            scanReturn = scanf(" %10[^\n]", newStudent.name); /* This will put at most 10 characters into the name of the new student */
+            while (getchar()!='\n'); /* This clears any remaining characters in the input stream */
+        } while (scanReturn != 1); /* Loop until we receive a valid input (really, only once but need to be sure) */
 
         do {
             if (scanReturn == 0)
-                printf("Invalid day. ");
+                printf("Invalid day. "); /* Display error for invalid input */
             printf("Enter birthday: Day>");
-            char temp[100];
-            scanf("%100[^\n]", temp);
-            scanReturn = isNumber(temp);
-            if (atoi(temp) < 1 || atoi(temp) > 31)
+            char temp[10];
+            scanf("%2[^\n]", temp); /* Accept up to 2 characters until you see \n */
+            scanReturn = isNumber(temp); /* Check for valid integer */
+            if (atoi(temp) < 1 || atoi(temp) > 31) /* Check for correct input range */
                 scanReturn = 0;
             else
-                newStudent.birthday.day = atoi(temp);
-            while (getchar()!='\n');
+                newStudent.birthday.day = atoi(temp); /* If valid, set to input */
+            while (getchar()!='\n'); /* Clear the input stream of remaining characters */
         } while (scanReturn != 1);
 
         do {
             if (scanReturn == 0)
-                printf("Invalid month. ");
+                printf("Invalid month. "); /* Display error for invalid input */
             printf("Enter birthday: Month>");
-            char temp[100];
-            scanf("%100[^\n]", temp);
-            scanReturn = isNumber(temp);
-            if (atoi(temp) < 1 || atoi(temp) > 12)
+            char temp[10];
+            scanf("%2[^\n]", temp); /* Accept up to 2 characters until you see \n */
+            scanReturn = isNumber(temp); /* Check for valid integer */
+            if (atoi(temp) < 1 || atoi(temp) > 12) /* Check for correct input range */
                 scanReturn = 0;
             else
-                newStudent.birthday.month = atoi(temp);
-            while (getchar()!='\n');
+                newStudent.birthday.month = atoi(temp); /* If valid, set to input */
+            while (getchar()!='\n'); /* Clear the input stream of remaining characters */
         } while (scanReturn != 1);
 
         do {
             if (scanReturn == 0)
-                printf("Invalid year. ");
+                printf("Invalid year. "); /* Display error for invalid input */
             printf("Enter birthday: Year>");
-            char temp[100];
-            scanf("%100[^\n]", temp);
-            scanReturn = isNumber(temp);
-            if (atoi(temp) < 1800 || atoi(temp) > 2016)
+            char temp[10];
+            scanf("%4[^\n]", temp); /* Accept up to 4 characters until you see \n */
+            scanReturn = isNumber(temp); /* Check for valid integer */
+            if (atoi(temp) < 1800 || atoi(temp) > 2016) /* Check for correct input range */
                 scanReturn = 0;
             else
-                newStudent.birthday.year = atoi(temp);
-            while (getchar()!='\n');
+                newStudent.birthday.year = atoi(temp); /* If valid, set to input */
+            while (getchar()!='\n'); /* Clear the input stream of remaining characters */
         } while (scanReturn != 1);
 
         do {
             if (scanReturn == 0)
-                printf("Invalid GPA. ");
+                printf("Invalid GPA. "); /* Display error for invalid input */
             printf("Enter GPA>");
-            char temp[100];
-            scanf("%100[^\n]", temp);
-            scanReturn = isFloat(temp);
-            if (atof(temp) < 0 || atof(temp) > 4)
+            char temp[10];
+            scanf("%6[^\n]", temp); /* Accept up to 6 characters until you see \n */
+            scanReturn = isFloat(temp); /* Check for valid float */
+            if (atof(temp) < 0 || atof(temp) > 4) /* Check for correct input range */
                 scanReturn = 0;
             else
-                newStudent.gpa = atof(temp);
-            while (getchar()!='\n');
+                newStudent.gpa = atof(temp); /* If valid, set to input */
+            while (getchar()!='\n'); /* Clear the input stream of remaining characters */
         } while (scanReturn != 1);
 
         list[*listSize] = newStudent;
-        *listSize += 1;
+        *listSize += 1; /* Increment the list because we just added a student */
     }
 }
 
+/*
+ *  This function accepts the list of students and a pointer to the list size.
+ *  It will
+ * */
 void displayList(student_t list[], int* listSize) {
     if (*listSize == 0) {
         printf("Class is empty\n");
@@ -212,36 +221,51 @@ void displayList(student_t list[], int* listSize) {
     }
 }
 
+/*
+ *  This function accepts the list of students and a pointer to the list size.
+ *  It will
+ * */
 void save(student_t list[], int* listSize) {
-    FILE* db = fopen(DB_FILE_NAME, "w");
+    FILE* db = fopen(DB_FILE_NAME, "w"); /* Opens the database file with write permissions */
     int i;
     for (i = 0; i < *listSize; i++) {
+        /* Print each student to the database with the same format as printing to console to keep it simple */
         fprintf(db, "%11s %02d-%02d-%d %.4f\n", list[i].name, list[i].birthday.day, list[i].birthday.month, list[i].birthday.year, list[i].gpa);
     }
-    fclose(db);
+    fclose(db); /* Close the file */
 }
 
+/*
+ *  This function accepts the list of students and a pointer to the list size.
+ *  It will
+ * */
 void read(student_t list[], int* listSize) {
     FILE* db = fopen(DB_FILE_NAME, "r");
     if (NULL == db)
     {
+        /* Display error if we can't read the database (usually means it doesn't exist) */
         printf("Read error\n");
     }
     else {
         int i = 0;
+        /* Loops over every line of the file and sets the current index in the list to values from the database */
         while (EOF != fscanf(db, "%11s %02d-%02d-%d %f\n", list[i].name, &list[i].birthday.day, &list[i].birthday.month, &list[i].birthday.year, &list[i].gpa)) {
             i++;
         }
 
-        *listSize = i;
+        *listSize = i; /* Set the list size to the number of rows in the database */
     }
 
-    fclose(db);
+    fclose(db); /* Close the file */
 }
 
+/*
+ * This function accepts a string and returns whether it is a valid integer
+ * */
 int isNumber (char str[]) {
-    int i;
-    for (i = 0; str[i] != '\0'; i++) {
+    int i; /* Used as the loop index */
+    for (i = 0; str[i] != '\0'; i++) { /* Loop over each character of the string until we see the null character */
+        /* Check the ascii value is within the range of the ascii values for 0-9 */
         if ((int)str[i] < 48 || (int)str[i] > 57) {
             return 0;
         }
@@ -249,9 +273,13 @@ int isNumber (char str[]) {
     return 1;
 }
 
+/*
+ * This function accepts a string and returns whether it is a valid float
+ * */
 int isFloat (char str[]) {
-    int i;
-    for (i = 0; str[i] != '\0'; i++) {
+    int i; /* Used as the loop index */
+    for (i = 0; str[i] != '\0'; i++) { /* Loop over each character of the string until we see the null character */
+        /* Check the ascii value is within the range of the ascii values for 0-9 or is a decimal point */
         if (((int)str[i] < 48 || (int)str[i] > 57) && (int)str[i] != 46) {
             return 0;
         }
