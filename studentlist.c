@@ -61,6 +61,8 @@ void addStudent(student_t[], int*);
 void displayList(student_t[], int*);
 void save(student_t[], int*);
 void read(student_t[], int*);
+int isNumber (char[]);
+int isFloat (char[]);
 
 /**********************************************************************
 Main
@@ -73,7 +75,7 @@ int main(void) {
         printmenu();
         printf("Enter your choice>");
         scanf("%c", &choice);
-        while (getchar()!='\n') {
+        while (getchar() != '\n') {
             choice = '0';
         }
         switch (choice){
@@ -138,14 +140,8 @@ void addStudent(student_t list[], int* listSize) {
                 printf("Invalid day. ");
             printf("Enter birthday: Day>");
             char temp[100];
-            int i;
-            scanReturn = scanf("%100[^\n]", temp);
-            for (i = 0; temp[i] != '\0'; i++) {
-                if ((int)temp[i] < 48 || (int)temp[i] > 57) {
-                    scanReturn = 0;
-                    break;
-                }
-            }
+            scanf("%100[^\n]", temp);
+            scanReturn = isNumber(temp);
             if (atoi(temp) < 1 || atoi(temp) > 31)
                 scanReturn = 0;
             else
@@ -158,14 +154,8 @@ void addStudent(student_t list[], int* listSize) {
                 printf("Invalid month. ");
             printf("Enter birthday: Month>");
             char temp[100];
-            int i;
-            scanReturn = scanf("%100[^\n]", temp);
-            for (i = 0; temp[i] != '\0'; i++) {
-                if ((int)temp[i] < 48 || (int)temp[i] > 57) {
-                    scanReturn = 0;
-                    break;
-                }
-            }
+            scanf("%100[^\n]", temp);
+            scanReturn = isNumber(temp);
             if (atoi(temp) < 1 || atoi(temp) > 12)
                 scanReturn = 0;
             else
@@ -178,14 +168,8 @@ void addStudent(student_t list[], int* listSize) {
                 printf("Invalid year. ");
             printf("Enter birthday: Year>");
             char temp[100];
-            int i;
-            scanReturn = scanf("%100[^\n]", temp);
-            for (i = 0; temp[i] != '\0'; i++) {
-                if ((int)temp[i] < 48 || (int)temp[i] > 57) {
-                    scanReturn = 0;
-                    break;
-                }
-            }
+            scanf("%100[^\n]", temp);
+            scanReturn = isNumber(temp);
             if (atoi(temp) < 1800 || atoi(temp) > 2016)
                 scanReturn = 0;
             else
@@ -198,15 +182,9 @@ void addStudent(student_t list[], int* listSize) {
                 printf("Invalid GPA. ");
             printf("Enter GPA>");
             char temp[100];
-            int i;
-            scanReturn = scanf("%100[^\n]", temp);
-            for (i = 0; temp[i] != '\0'; i++) {
-                if (((int)temp[i] < 48 || (int)temp[i] > 57) && (int)temp[i] != 46) {
-                    scanReturn = 0;
-                    break;
-                }
-            }
-            if (atof(temp) < 0 || atof(temp) > 4.0)
+            scanf("%100[^\n]", temp);
+            scanReturn = isFloat(temp);
+            if (atof(temp) < 0 || atof(temp) > 4)
                 scanReturn = 0;
             else
                 newStudent.gpa = atof(temp);
@@ -257,4 +235,24 @@ void read(student_t list[], int* listSize) {
     }
 
     fclose(db);
+}
+
+int isNumber (char str[]) {
+    int i;
+    for (i = 0; str[i] != '\0'; i++) {
+        if ((int)str[i] < 48 || (int)str[i] > 57) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+int isFloat (char str[]) {
+    int i;
+    for (i = 0; str[i] != '\0'; i++) {
+        if (((int)str[i] < 48 || (int)str[i] > 57) && (int)str[i] != 46) {
+            return 0;
+        }
+    }
+    return 1;
 }
