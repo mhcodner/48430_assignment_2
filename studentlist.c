@@ -77,7 +77,7 @@ int main(void) {
         char temp[2]; /* Used as a temporary return for the scanf */
         int scanReturn = scanf("%1[^\n]", temp); /* This accepts at most 1 character until it sees a new line */
         choice = temp[0]; /* Choice is set to the first character of the temp string */
-        if (!scanReturn)
+        if (!scanReturn) /* Check if any value was actually entered */
             choice = '0';
         while (getchar() != '\n') { /* This gets rid of any extra characters after the scanf because they are still in the input stream */
             choice = '0'; /* If there are any characters after the first one, then choice is set to an invalid value */
