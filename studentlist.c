@@ -155,7 +155,8 @@ void addStudent(student_t list[], int* listSize) {
                 scanReturn = 0;
             else
                 newStudent.birthday.day = atoi(temp); /* If valid, set to input */
-            while (getchar()!='\n'); /* Clear the input stream of remaining characters */
+            while (getchar()!='\n')
+                scanReturn = 0; /* Clear the input stream of remaining characters */
         } while (scanReturn != 1);
 
         do {
@@ -169,7 +170,8 @@ void addStudent(student_t list[], int* listSize) {
                 scanReturn = 0;
             else
                 newStudent.birthday.month = atoi(temp); /* If valid, set to input */
-            while (getchar()!='\n'); /* Clear the input stream of remaining characters */
+            while (getchar()!='\n')
+                scanReturn = 0; /* Clear the input stream of remaining characters */
         } while (scanReturn != 1);
 
         do {
@@ -183,7 +185,8 @@ void addStudent(student_t list[], int* listSize) {
                 scanReturn = 0;
             else
                 newStudent.birthday.year = atoi(temp); /* If valid, set to input */
-            while (getchar()!='\n'); /* Clear the input stream of remaining characters */
+            while (getchar()!='\n')
+                scanReturn = 0; /* Clear the input stream of remaining characters */
         } while (scanReturn != 1);
 
         do {
@@ -197,7 +200,8 @@ void addStudent(student_t list[], int* listSize) {
                 scanReturn = 0;
             else
                 newStudent.gpa = atof(temp); /* If valid, set to input */
-            while (getchar()!='\n'); /* Clear the input stream of remaining characters */
+            while (getchar()!='\n')
+                scanReturn = 0; /* Clear the input stream of remaining characters */
         } while (scanReturn != 1);
 
         list[*listSize] = newStudent;
