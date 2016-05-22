@@ -194,7 +194,7 @@ void addStudent(student_t list[], int* listSize) {
                 printf("Invalid GPA. "); /* Display error for invalid input */
             printf("Enter GPA>");
             char temp[10];
-            scanf("%6[^\n]", temp); /* Accept up to 6 characters until you see \n */
+            scanf("%8[^\n]", temp); /* Accept up to 6 characters until you see \n */
             scanReturn = isFloat(temp); /* Check for valid float */
             if (atof(temp) < 0 || atof(temp) > 4) /* Check for correct input range */
                 scanReturn = 0;
